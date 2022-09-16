@@ -269,6 +269,18 @@ QBCore.Commands.Add("sc", Lang:t("commands.softcuff"), {}, false, function(sourc
     end
 end)
 
+QBCore.Commands.Add("hc", Lang:t("commands.hardcuff"), {}, false, function(source)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if Player.PlayerData.job.name == "police" and Player.PlayerData.job.onduty then
+        TriggerClientEvent("police:client:CuffPlayerHard", src)
+	FreezeEntityPosition(GetPlayerPed(playerId), true)
+    else
+        TriggerClientEvent('QBCore:Notify', src, Lang:t("error.on_duty_police_only"), 'error')
+    end
+end)
+
+
 QBCore.Commands.Add("cam", Lang:t("commands.camera"), {{name = "camid", help = Lang:t('info.camera_id')}}, false, function(source, args)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
